@@ -5,9 +5,12 @@ import javax.servlet.http.HttpServletResponse;
 
 import com.ict.model.basic.Command;
 
-public class CookieJoinCommand implements Command{
+public class AdCloseCommand implements Command{
+
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
-		return "view/cookie/joinForm.jsp";
+		request.setAttribute("res2", 1);
+		return "view/cookie/index.jsp";
 	}
+
 }

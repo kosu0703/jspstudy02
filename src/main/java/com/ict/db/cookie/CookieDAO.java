@@ -15,16 +15,16 @@ public class CookieDAO {
 	
 	// DB처리하는 메서드들
 	// 회원가입
-	public static int getJoin(CookieVO bvo) {
+	public static int getJoin(CookieVO cvo) {
 		int result = 0 ;
-		result = getSession().insert("cookieUser.c_join", bvo);
+		result = getSession().insert("cookieUser.c_join", cvo);
 		ss.commit();
 		return result;
 	}
 	
-	public static CookieVO getLogIn(CookieVO bvo) {
+	public static CookieVO getLogIn(CookieVO cvo) {
 		CookieVO cvo2 = null;
-		cvo2 = getSession().selectOne("cookieUser.c_login", bvo);
+		cvo2 = getSession().selectOne("cookieUser.c_login", cvo);
 		return cvo2;
 	}
 	

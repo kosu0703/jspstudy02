@@ -30,6 +30,8 @@ public class CookieLoginCommand implements Command{
 		// 브라우저에 쿠키 저장
 		// response.addCookie(cookie1);
 		// response.addCookie(cookie2);
+		
+		
 		return "view/cookie/loginForm.jsp";
 	}
 

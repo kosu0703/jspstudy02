@@ -10,6 +10,8 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 
 import com.ict.model.basic.Command;
+import com.ict.model.cookie.AdClose7Command;
+import com.ict.model.cookie.AdCloseCommand;
 import com.ict.model.cookie.CookieJoinCommand;
 import com.ict.model.cookie.CookieJoinOKCommand;
 import com.ict.model.cookie.CookieLoginCommand;
@@ -40,6 +42,8 @@ public class CookieController extends HttpServlet {
 			case "c_profile" : comm = new CookieProfileCommand(); break;
 			case "c_profile_ok" : comm = new CookieProfileOKCommand(); break;
 			case "c_logout" : comm = new CookieLogoutCommand(); break;
+			case "ad_close" : comm = new AdCloseCommand(); break;
+			case "ad_close7" : comm = new AdClose7Command(); break;
 		}
 		String path = comm.exec(request, response);
 		request.getRequestDispatcher(path).forward(request, response);

@@ -33,6 +33,7 @@
 			<input type="submit" value="마이페이지">
 			<input type="hidden" name="cmd" value="s_profile">
 		</form>
+		
 	</c:if>
 </body>
 </html>
