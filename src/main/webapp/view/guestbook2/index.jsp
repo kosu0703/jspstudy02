@@ -8,7 +8,7 @@
 	</head>
 	<body>
 		
-		<form action="/02_login/Guest2" method="get">
+		<form action="${pageContext.request.contextPath}/Guest2" method="post">
 			<input type="submit" value="guestbook2">
 			<input type="hidden" name="cmd" value="list">
 		</form>

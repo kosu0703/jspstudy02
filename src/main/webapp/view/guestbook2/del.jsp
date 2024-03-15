@@ -19,7 +19,7 @@
 		if(pwd === pwd2){
 			const chk = confirm("정말 삭제하시겠습니까?");
 			if (chk) {
-				f.action = "/02_login/Guest2";
+				f.action = "${pageContext.request.contextPath}/Guest2";
 				f.submit();
 			}else {
 				//	history 오고가고한 경로

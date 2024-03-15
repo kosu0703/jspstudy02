@@ -33,7 +33,6 @@ public class Guest2 extends HttpServlet {
 		PrintWriter out = response.getWriter();
 		
 		String cmd = request.getParameter("cmd");
-		System.out.println(cmd);
 		Command comm = null;
 		switch (cmd) {
 		case "list": comm = new ListCommand(); break;

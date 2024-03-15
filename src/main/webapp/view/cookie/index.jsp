@@ -17,10 +17,7 @@
 </style>
 </head>
 <body>
-<h2>res ${res }</h2>
-<h2>res2 ${res2 }</h2>
-<h2>coo ${cookie.ad_close7.value }</h2>
-	 <c:if test="${cookie.id.value == null }">
+	 <c:if test="${res == null && cookie.id.value == null }">
 		<form action="/02_login/CookieController" method="post" class="form">
 			<input type="submit" value="로그인">
 			<input type="hidden" name="cmd" value="c_login">
@@ -31,8 +28,8 @@
 		</form>
 	</c:if> 
 	
-	<c:if test="${cookie.id.value != null }">
-		<span class="form"> ${cookie.id.value}님 환영합니다.</span>
+	<c:if test="${res == 1 || cookie.id.value != null }">
+		<span class="form"> ${cookie.id.value }님 환영합니다.</span>
 		<form action="/02_login/CookieController" method="post" class="form">
 			<input type="submit" value="로그아웃">
 			<input type="hidden" name="cmd" value="c_logout">
@@ -50,7 +47,7 @@
 	</c:if>
 	
 	<c:choose>
-		<c:when test="${res2 != 1 && cookie.ad_close7.value != 7}">
+		<c:when test="${res2 != 1 || cookie.ad_close7.value != 7}">
 			<div>
 				<form action="/02_login/CookieController" method="post">
 					<input type="submit" value="일주일동안 보이지 않기">

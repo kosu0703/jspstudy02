@@ -1,6 +1,7 @@
 package com.ict.db.guestbook2;
 
 public class Guest2VO {
+	//	DB 컬럼명과 같아야 한다.
 	private String idx, name, subject, content, email, pwd, f_name, f_path, regdate;
 
 	public String getIdx() {

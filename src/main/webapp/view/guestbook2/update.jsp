@@ -1,5 +1,6 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <!DOCTYPE html>
 <html>
 <head>
@@ -17,7 +18,9 @@
 		const pwd = "${gvo.pwd}";
 		const pwd2 = f.pwd.value;
 		if (pwd === pwd2) {
-			f.action = "/02_login/Guest2?cmd=update_ok";
+			<%-- enctype 의 multipart 에서는 
+			서블릿(컨트롤러) 에서는 mr 을 못쓰기 때문에 cmd 는 ? 파라미터로 보내주어야 한다. --%>
+			f.action = "${pageContext.request.contextPath}/Guest2?cmd=update_ok&idx=${gvo.idx}";
 			f.submit();
 		}else {
 			alert("비밀번호가 틀렸습니다.");
@@ -32,7 +35,7 @@
 	<div>
 		<h2>방명록 : 수정화면</h2>
 		<hr />
-		<p>[<a href="/02_login/Guest2?cmd=list">목록으로 이동</a>]</p>
+		<p>[<a href="${pageContext.request.contextPath}/Guest2?cmd=list">목록으로 이동</a>]</p>
 		<form method="post" enctype="multipart/form-data">
 			<table>
 				<tr align="center">
@@ -49,7 +52,20 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">첨부파일</td>
-					<td><input type="file" name="f_name2"/>이전파일(${gvo.f_name })</td>
+					<c:choose>
+						<c:when test="${empty gvo.f_name}">
+							<td>
+							<input type="file" name="f_name"><b>이전 파일 없음</b>
+							<input type="hidden" name="old_f_name" value="">
+							</td>
+						</c:when>
+						<c:otherwise>
+							<td>
+							<input type="file" name="f_name"><b>이전 파일명 : ${gvo.f_name}</b>
+							<input type="hidden" name="old_f_name" value="${gvo.f_name}">
+							</td>
+						</c:otherwise>
+					</c:choose>
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">비밀번호</td>
@@ -63,7 +79,6 @@
 				<tfoot>
 					<tr align="center">
 						<td colspan="2">
-							<input type="hidden" name="idx" value="${gvo.idx}">
 							<input type="button" value="수정완료" onclick="update_go(this.form)" />
 							&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 							<input type="reset" value="취소" />

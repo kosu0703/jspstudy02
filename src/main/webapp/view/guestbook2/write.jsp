@@ -14,7 +14,7 @@
 <script type="text/javascript">
 function save_go(f) {
 	//	값이 다 채워졌는지 검사해야함
-	f.action="/02_login/Guest2?cmd=write_ok";
+	f.action="${pageContext.request.contextPath}/Guest2?cmd=write_ok";
 	f.submit();
 }
 </script>
@@ -23,29 +23,33 @@ function save_go(f) {
 	<div>
 		<h2>방명록 : 작성화면</h2>
 		<hr />
-		<p>[<a href="/02_login/Guest2?cmd=list">목록으로 이동</a>]</p>
+		<p>[<a href="${pageContext.request.contextPath}/Guest2?cmd=list">목록으로 이동</a>]</p>
+						<%-- 파일업로드 할때 반드시 enctype 써주자 --%>
+			<%-- **enctype 사용하면 서블릿(컨트롤러)에서 request.getParameter 사용불가 --%>
+					<%-- 따라서 인풋타입에 hidden 을 사용할 수 없다 --%>
+					<%-- action 에서 ? 를 사용하여 cmd 를 보내주자 --%>
 		<form method="post" enctype="multipart/form-data">
 			<table>
 				<tr align="center">
 					<td bgcolor="#99ccff">작성자</td>
-					<td><input type="text" name="name" size ="20"/></td>
+					<td><input type="text" name="name" size ="20"></td>
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">제  목</td>
-					<td><input type="text" name="subject" size ="20"/></td>
+					<td><input type="text" name="subject" size ="20"></td>
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">email</td>
-					<td><input type="text" name="email" size ="20"/></td>
+					<td><input type="text" name="email" size ="20"></td>
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">비밀번호</td>
-					<td><input type="password" name="pwd" size ="20"/></td>
+					<td><input type="password" name="pwd" size ="20"></td>
 				</tr>
 				
 				<tr align="center">
 					<td bgcolor="#99ccff">첨부파일</td>
-					<td><input type="file" name="f_name"/></td>
+					<td><input type="file" name="f_name"></td>
 				</tr>
 				<tr align="center">
 					<td colspan="2">

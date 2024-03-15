@@ -15,6 +15,7 @@ public class DeleteCommand implements Command{
 		//	idx 와 pwd 를 같이 넘겨줘야함
 		request.setAttribute("idx", idx);
 		request.setAttribute("pwd", pwd);
+		
 		return "view/guestbook2/del.jsp";
 	}
 

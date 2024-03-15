@@ -16,9 +16,13 @@ public class WriteOkCommand implements Command{
 
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
+		//	multipart 로 넘어오면 무조건 try ~ catch
 		try {
-			
+			//	1. 실제 저장위치 받자
 			String path = request.getServletContext().getRealPath("upload");
+			
+			//	2. cos 에서 지원하는 클래스 사용
+			//		파일업로드 자동으로 됨
 			MultipartRequest mr = 
 					new MultipartRequest(request, 
 							path,			//	3.
@@ -28,6 +32,22 @@ public class WriteOkCommand implements Command{
 							new DefaultFileRenamePolicy()
 							);
 			
+			//String name = mr.getParameter("name");
+			//String subject = mr.getParameter("subject");
+			//String email = mr.getParameter("email");
+			//String pwd = mr.getParameter("pwd");
+			//String content = mr.getParameter("content");
+			
+			Guest2VO gvo = new Guest2VO();
+			gvo.setName(mr.getParameter("name"));
+			gvo.setSubject(mr.getParameter("subject"));
+			gvo.setEmail(mr.getParameter("email"));
+			gvo.setPwd(mr.getParameter("pwd"));
+			gvo.setContent(mr.getParameter("content"));
+			gvo.setF_path(path);
+			
+			//	첨부파일이 있을때와 없을때를 구분하자
+			/*
 			String f_name = mr.getFilesystemName("f_name");
 			if (f_name != null) {
 				File file = new File(path, f_name);
@@ -37,27 +57,24 @@ public class WriteOkCommand implements Command{
 				f_name = "none";
 				path = "none";
 			}
-			String name = mr.getParameter("name");
-			String subject = mr.getParameter("subject");
-			String email = mr.getParameter("email");
-			String pwd = mr.getParameter("pwd");
-			String content = mr.getParameter("content");
+			*/
+			//gvo.setF_name(f_name);
+			//gvo.setF_path(path);
 			
-			Guest2VO gvo = new Guest2VO();
-			gvo.setName(name);
-			gvo.setSubject(subject);
-			gvo.setEmail(email);
-			gvo.setPwd(pwd);
-			gvo.setF_name(f_name);
-			gvo.setF_path(path);
-			gvo.setContent(content);
-			
-			int res = Guest2DAO.getInsert(gvo);
-			
+			if (mr.getFile("f_name") != null){
+				gvo.setF_name(mr.getFilesystemName("f_name"));
+			}else {
+				gvo.setF_name("");
+			}
+			int result = Guest2DAO.getInsert(gvo);
+			if (result > 0) {
+				return "Guest2?cmd=list";
+			}
+			return "view/guestbook2/error.jsp";
 		} catch (IOException e) {
-			e.printStackTrace();
+			System.out.println(e);
+			return "view/guestbook2/error.jsp";
 		}
-		return "Guest2?cmd=list";
 		
 	}
 

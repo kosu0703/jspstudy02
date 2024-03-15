@@ -18,7 +18,12 @@ public class ListCommand implements Command{
 		
 		//	순차적으로 만들면서 넘어가자(이름을 생각하면서)
 		//	DAO 로 가자
+		
+		//	전체목록 가져오기
+		//	리스트
 		List<Guest2VO> list = Guest2DAO.getList();
+		
+		//	request 에 가져온 리스트를 담자
 		request.setAttribute("list", list);
 		
 		return "view/guestbook2/list.jsp";

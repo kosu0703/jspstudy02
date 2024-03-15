@@ -7,21 +7,26 @@
    <select id="list" resultType="com.ict.db.guestbook2.Guest2VO">
 		select * from guestbook2 order by idx
 	</select>
+	
 	<insert id="insert" parameterType="com.ict.db.guestbook2.Guest2VO">
 		insert into guestbook2(idx, name, subject, content, email, pwd, f_name, f_path ,regdate)
-		 values(guestbook_seq.nextval, #{name}, #{subject}, #{content}, #{email}, #{pwd}, #{f_name}, #{f_path}, sysdate)
+		 values(guestbook2_seq.nextval, #{name}, #{subject}, #{content}, #{email}, #{pwd}, #{f_name}, #{f_path}, sysdate)
 	</insert>
+	
 	<select id="detail" resultType="com.ict.db.guestbook2.Guest2VO" parameterType="String">
 		select * from guestbook2 where idx = #{idx}
 	</select>
+	
 	<delete id="delete" parameterType="String">
 		delete from guestbook2 where idx = #{idx}
 	</delete>
+	
 	<update id="update" parameterType="com.ict.db.guestbook2.Guest2VO">
 		update guestbook2 
 		set name = #{name}, subject = #{subject}, email = #{email}, content = #{content} , f_name = #{f_name} , f_path = #{f_path}
 		where idx = #{idx}
 	</update>
+	
 </mapper>
 
 

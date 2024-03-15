@@ -1,10 +1,11 @@
 <%@ page language="java" contentType="text/html; charset=UTF-8"
     pageEncoding="UTF-8"%>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>    
 <!DOCTYPE html>
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 방 명 록 </title>
+<title> 상세보기 </title>
 <style type="text/css">
 	a { text-decoration: none;}
 	table{width: 600px; border-collapse:collapse; text-align: center;}
@@ -14,12 +15,12 @@
 <script type="text/javascript">
 	//	수정
 	function update_go(f) {
-		f.action = "/02_login/Guest2?cmd=update";
+		f.action = "${pageContext.request.contextPath}/Guest2?cmd=update";
 		f.submit();
 	}
 	//	삭제
 	function delete_go(f) {
-		f.action = "/02_login/Guest2?cmd=delete";
+		f.action = "${pageContext.request.contextPath}/Guest2?cmd=delete";
 		f.submit();
 	}
 </script>
@@ -28,7 +29,7 @@
 	<div>
 		<h2>방명록 : 내용화면</h2>
 		<hr />
-		<p>[<a href="/02_login/Guest2?cmd=list">게시물 목록으로</a>]</p>
+		<p>[<a href="${pageContext.request.contextPath}/Guest2?cmd=list">게시물 목록으로</a>]</p>
 		<form method="post">
 			<table>
 				<tr align="center">
@@ -45,7 +46,22 @@
 				</tr>
 				<tr align="center">
 					<td bgcolor="#99ccff">첨부파일</td>
-					<td><img src="upload/${gvo.f_name }" style="width: 60px; "><br> ${gvo.f_name }</td>
+					<c:choose>
+						<c:when test="${empty gvo.f_name}">
+							<td><b>첨부파일 없음</b></td>
+						</c:when>
+						<c:otherwise>
+							<td>
+								<a href="view/guestbook2/down.jsp?path=upload&f_name=${gvo.f_name }">
+									<img src="upload/${gvo.f_name }" style="width: 80px; ">
+								</a>
+								<br> 
+								${gvo.f_name }
+							</td>
+						</c:otherwise>
+					</c:choose>
+					
+					
 				</tr>
 				<tr align="left">
 					<td colspan="2">

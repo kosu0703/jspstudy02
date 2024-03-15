@@ -5,7 +5,7 @@
 <html>
 <head>
 <meta charset="UTF-8">
-<title> 방 명 록 </title>
+<title> 방 명 록 2 </title>
 <style type="text/css">
 	a { text-decoration: none;}
 	table{width: 600px; border-collapse:collapse; text-align: center;}
@@ -15,10 +15,9 @@
 </head>
 <body>
 	<div>
-		<h2> 방 명 록 </h2>
+		<h2> 방 명 록 2 </h2>
 		<hr>
-					<!-- 주소 뒤에 ? 붙여서 이름과 값을 가지고 가자 -->
-		<p>[<a href="/02_login/Guest2?cmd=write">방명록 쓰기</a>]</p>
+		<p>[<a href="${pageContext.request.contextPath}/Guest2?cmd=write">방명록 쓰기</a>]</p>
 		<table>
 			<thead>
 				<tr style="background-color: #99ccff"><th>번호</th><th>작성자</th><th>제목</th><th>작성일</th></tr>
@@ -33,8 +32,7 @@
 							<tr>
 								<td>${k.idx}</td>
 								<td>${k.name}</td>
-											<!-- 가져가야할 파라미터는 주소뒤에 ? 붙여서 가져오자 (여러개 & ) -->
-								<td>[<a href="/02_login/Guest2?cmd=onelist&idx=${k.idx}">${k.subject}</a>]</td>
+								<td>[<a href="${pageContext.request.contextPath}/Guest2?cmd=onelist&idx=${k.idx}">${k.subject}</a>]</td>
 								<td>${k.regdate.substring(0,10)}</td>
 							</tr>
 						</c:forEach>

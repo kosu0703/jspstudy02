@@ -15,11 +15,11 @@ public class UpdateOkCommand implements Command{
 
 	@Override
 	public String exec(HttpServletRequest request, HttpServletResponse response) {
+		//	넘어오는게 멀티파트면 트라이캐치
 		try {
-			
-			request.setCharacterEncoding("utf-8");
-			
+			//	1. 항상 실제 위치 먼저
 			String path = request.getServletContext().getRealPath("upload");
+			
 			MultipartRequest mr = 
 					new MultipartRequest(request, 
 							path,			//	3.
@@ -29,41 +29,37 @@ public class UpdateOkCommand implements Command{
 							new DefaultFileRenamePolicy()
 							);
 			
-			String idx = mr.getParameter("idx");
-			String name = mr.getParameter("name");
-			String subject = mr.getParameter("subject");
-			String email = mr.getParameter("email");
-			String pwd = mr.getParameter("pwd");
-			String content = mr.getParameter("content");
-			String f_name = mr.getFilesystemName("f_name2");
+			Guest2VO gvo = new Guest2VO();
+			gvo.setIdx(mr.getParameter("idx"));
+			gvo.setName(mr.getParameter("name"));
+			gvo.setSubject(mr.getParameter("subject"));
+			gvo.setEmail(mr.getParameter("email"));
+			gvo.setPwd(mr.getParameter("pwd"));
+			gvo.setContent(mr.getParameter("content"));
+			gvo.setF_path(path);
 			
-			if (f_name != null) {
-				File file = new File(path, f_name);
-				request.setAttribute("path", path);
-				request.setAttribute("f_name", f_name);
+			//	예전 이름을 받자
+			String old_f_name = mr.getParameter("old_f_name");
+			//	새로 올린게 없으면, 이전거를 그대로 쓰고
+			if (mr.getFile("f_name") == null) {
+				gvo.setF_name(old_f_name);
+			//	새로 올린게 있으면, 새로운 파일로 바꿔주자
 			}else {
-				Guest2VO vo = Guest2DAO.getOneList(idx);
-				f_name = vo.getF_name();
-				path = vo.getF_path();
+				gvo.setF_name(mr.getFilesystemName("f_name"));
 			}
 			
-			Guest2VO gvo = new Guest2VO();
-			gvo.setIdx(idx);
-			gvo.setName(name);
-			gvo.setSubject(subject);
-			gvo.setEmail(email);
-			gvo.setPwd(pwd);
-			gvo.setF_name(f_name);
-			gvo.setF_path(path);
-			gvo.setContent(content);
-			
+			//	DB 가서 업데이트 해주자
 			int res = Guest2DAO.getUpdate(gvo);
-			return "Guest2?cmd=onelist&idx="+idx;
+			if (res > 0) {
+				return "Guest2?cmd=onelist&idx="+gvo.getIdx();
+			}else {
+				return "view/guestbook2/error.jsp";
+			}
+			
 		} catch (IOException e) {
 			System.out.println(e);
-			
+			return "view/guestbook2/error.jsp";
 		}
-		return null;
 		
 	}
 
